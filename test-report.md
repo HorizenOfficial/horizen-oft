@@ -71,7 +71,7 @@ Nothing to compile
 ✔ Which networks would you like to deploy? › binance-testnet
 ✔ Which deploy script tags would you like to use? … ZenTokenOFT
 info:    Will deploy 1 network: binance-testnet
-info:    Will use deploy scripts tagged with MyOFT
+info:    Will use deploy scripts tagged with ZenTokenOFT
 ✔ Do you want to continue? … yes
 Network: binance-testnet
 Deployer: 0x0699DD23d5b90Ef74777B2a0390ef6bABB9d55b4

@@ -14,11 +14,9 @@ PRIVATE_KEY=<<redacted>>
 # real testnet zen on Base sepolia
 ERC20_TO_ADAPT=0x107fde93838e3404934877935993782f977324bb
 
-ZEN_OFT_NAME=tZEN
-ZEN_OFT_SYMBOL=tZEN
+ZEN_OFT_NAME=oftZEN
+ZEN_OFT_SYMBOL=oftZEN
 ```
-
-
 
 ## 1. Deploy ZenTokenOFTAdapter on Base
 ```
@@ -71,14 +69,14 @@ npx hardhat lz:deploy
 info:    Compiling your hardhat project
 Nothing to compile
 ✔ Which networks would you like to deploy? › binance-testnet
-✔ Which deploy script tags would you like to use? … MyOFT
+✔ Which deploy script tags would you like to use? … ZenTokenOFT
 info:    Will deploy 1 network: binance-testnet
 info:    Will use deploy scripts tagged with MyOFT
 ✔ Do you want to continue? … yes
 Network: binance-testnet
 Deployer: 0x0699DD23d5b90Ef74777B2a0390ef6bABB9d55b4
-Deploying ZenTokenOFT with name: tZEN, symbol: tZEN
-Deployed contract: ZenTokenOFT, network: binance-testnet, address: 0x4103CabEc5C7d1Ed9387cBEf42B83dbA37F6e493
+Deploying ZenTokenOFT with name: oftZEN, symbol: oftZEN
+Deployed contract: ZenTokenOFT, network: binance-testnet, address: 0x798d463bf01211e9F937Ae606c21c35868291c0a
 info:    ✓ Your contracts are now deployed
 ```
 
@@ -93,10 +91,12 @@ npx hardhat lz:oapp:wire --oapp-config layerzero.config.ts
 info:    Successfully sent 12 transactions
 info:    ✓ Your OApp is now configured
 ```
-
+Note: in this phase, some transactions failed because they were sent too fast and the RPC node interpreted as replacement transactions but with not enough replacement fee. When a transaction fails, the CLI asks you to retry them, and after a few retry they completed successfully.
 
 # Transfer tests 
+
 Due to the lack of tZEN on Base Testnet, this test was executed on another instance of the OFT Adapter using a different ERC20 token (a mintable mocked one). The procedure is the same that is needed to transfer with `ZenTokenOFT` and `ZenTokenOFTAdapter` if testnet ZEN is owned
+
 ## 4. Test transfer Base -> BSC
 ```
 npx hardhat lz:oft:send  --src-eid 40245 --dst-eid 40102 --amount 1 --to 0x0699DD23d5b90Ef74777B2a0390ef6bABB9d55b4

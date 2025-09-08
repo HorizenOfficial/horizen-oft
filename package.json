@@ -1,6 +1,6 @@
 {
-  "name": "ZenTokenOFTAdapter",
-  "version": "0.0.1",
+  "name": "@layerzerolabs/oft-adapter-example",
+  "version": "0.5.1",
   "private": true,
   "license": "MIT",
   "scripts": {
@@ -74,5 +74,8 @@
   "overrides": {
     "ethers": "^5.7.2",
     "hardhat-deploy": "^0.12.1"
+  },
+  "dependencies": {
+    "@nomicfoundation/hardhat-verify": "^2.0.14"
   }
 }

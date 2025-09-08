@@ -16,6 +16,9 @@ ERC20_TO_ADAPT=0x107fde93838e3404934877935993782f977324bb
 
 ZEN_OFT_NAME=oftZEN
 ZEN_OFT_SYMBOL=oftZEN
+
+# for verification on etherscan (optional)
+ETHERSCAN_API_KEY=<<redacted>>
 ```
 
 ## 1. Deploy ZenTokenOFTAdapter on Base
@@ -92,6 +95,44 @@ info:    Successfully sent 12 transactions
 info:    ✓ Your OApp is now configured
 ```
 Note: in this phase, some transactions failed because they were sent too fast and the RPC node interpreted as replacement transactions but with not enough replacement fee. When a transaction fails, the CLI asks you to retry them, and after a few retry they completed successfully.
+
+## 4. Verification on Base
+```
+npx hardhat verify --contract contracts/ZenTokenOFTAdapter.sol:ZenTokenOFTAdapter --network base-testnet 0x689FCE894D68013EDd9fAbcaD565E7d407C6B85F "0x107fde93838e3404934877935993782f977324bb" "0x6EDCE65403992e310A62460808c4b910D972f10f" "0x0699DD23d5b90Ef74777B2a0390ef6bABB9d55b4"
+```
+where: 
+- `0x689FCE894D68013EDd9fAbcaD565E7d407C6B85F` is the deployed address
+- `"0x107fde93838e3404934877935993782f977324bb"` is the token to adapt address
+- `"0x6EDCE65403992e310A62460808c4b910D972f10f"` is the Endpoint V2 Address on Base (https://docs.layerzero.network/v2/deployments/deployed-contracts?chains=base-sepolia%2Cbsc-testnet)
+- `"0x0699DD23d5b90Ef74777B2a0390ef6bABB9d55b4"` is the owner/deployer address
+
+```
+Successfully submitted source code for contract
+contracts/ZenTokenOFTAdapter.sol:ZenTokenOFTAdapter at 0x689FCE894D68013EDd9fAbcaD565E7d407C6B85F
+for verification on the block explorer. Waiting for verification result...
+
+Successfully verified contract ZenTokenOFTAdapter on the block explorer.
+https://sepolia.basescan.org/address/0x689FCE894D68013EDd9fAbcaD565E7d407C6B85F#code
+```
+## 5. Verification on BSC
+```
+npx hardhat verify --contract contracts/ZenTokenOFT.sol:ZenTokenOFT --network binance-testnet 0x798d463bf01211e9F937Ae606c21c35868291c0a "oftZEN" "oftZEN" "0x6EDCE65403992e310A62460808c4b910D972f10f" "0x0699DD23d5b90Ef74777B2a0390ef6bABB9d55b4"
+```
+where: 
+- `0x798d463bf01211e9F937Ae606c21c35868291c0a` is the deployed address
+- (first) `"oftZen"` is the name of the deployed token
+- (second) `"oftZen"` is the symbol of the deployed token
+- `"0x6EDCE65403992e310A62460808c4b910D972f10f"` is the Endpoint V2 Address on BSC (https://docs.layerzero.network/v2/deployments/deployed-contracts?chains=base-sepolia%2Cbsc-testnet)
+- `"0x0699DD23d5b90Ef74777B2a0390ef6bABB9d55b4"` is the owner/deployer address
+
+```
+Successfully submitted source code for contract
+contracts/ZenTokenOFT.sol:ZenTokenOFT at 0x798d463bf01211e9F937Ae606c21c35868291c0a
+for verification on the block explorer. Waiting for verification result...
+
+Successfully verified contract ZenTokenOFT on the block explorer.
+https://testnet.bscscan.com/address/0x798d463bf01211e9F937Ae606c21c35868291c0a#code
+```
 
 # Transfer tests 
 

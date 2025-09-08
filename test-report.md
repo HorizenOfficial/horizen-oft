@@ -71,7 +71,7 @@ Nothing to compile
 ✔ Which networks would you like to deploy? › binance-testnet
 ✔ Which deploy script tags would you like to use? … ZenTokenOFT
 info:    Will deploy 1 network: binance-testnet
-info:    Will use deploy scripts tagged with ZenTokenOFT
+info:    Will use deploy scripts tagged with MyOFT
 ✔ Do you want to continue? … yes
 Network: binance-testnet
 Deployer: 0x0699DD23d5b90Ef74777B2a0390ef6bABB9d55b4
@@ -95,35 +95,33 @@ Note: in this phase, some transactions failed because they were sent too fast an
 
 # Transfer tests 
 
-Due to the lack of tZEN on Base Testnet, this test was executed on another instance of the OFT Adapter using a different ERC20 token (a mintable mocked one). The procedure is the same that is needed to transfer with `ZenTokenOFT` and `ZenTokenOFTAdapter` if testnet ZEN is owned
-
-## 4. Test transfer Base -> BSC
+## Test transfer Base -> BSC
 ```
-npx hardhat lz:oft:send  --src-eid 40245 --dst-eid 40102 --amount 1 --to 0x0699DD23d5b90Ef74777B2a0390ef6bABB9d55b4
+npx hardhat lz:oft:send  --src-eid 40245 --dst-eid 40102 --amount 0.1 --to 0x0699DD23d5b90Ef74777B2a0390ef6bABB9d55b4
 ```
 
 ```
 info:    OFT Adapter detected - checking ERC20 allowance...
 info:    Current allowance: 0
-info:    Required amount: 1000000000000000000
+info:    Required amount: 100000000000000000
 info:    Insufficient allowance - approving ERC20 tokens...
-info:    Approval transaction hash: 0xa9a6e35da59d094416df2cd67ef46b3ad3e090e1bbcce3c86b9b2b7e51c9bbe8
+info:    Approval transaction hash: 0x4fe3f4cb13ea782a76519e7282a9e85e9956d4b26813a9568ad5c1d520c4f0f7
 info:    ERC20 approval confirmed
 info:    Quoting the native gas cost for the send transaction...
 info:    Sending the transaction...
-info:     Successfully sent 1 tokens from basesep-testnet to bsc-testnet
-info:     Explorer link for source chain basesep-testnet: https://sepolia.basescan.org/tx/0x7e74c7edc8815976db345b2006b686874f2e874b65110637a127ddd4a806075d
-info:     LayerZero Scan link for tracking all cross-chain transaction details: https://testnet.layerzeroscan.com/tx/0x7e74c7edc8815976db345b2006b686874f2e874b65110637a127ddd4a806075d
+info:     Successfully sent 0.1 tokens from basesep-testnet to bsc-testnet
+info:     Explorer link for source chain basesep-testnet: https://sepolia.basescan.org/tx/0x4762d207359fc2899d94216b337968ff55d85d55cc8813f8b7e8c821bdc8f8f2
+info:     LayerZero Scan link for tracking all cross-chain transaction details: https://testnet.layerzeroscan.com/tx/0x4762d207359fc2899d94216b337968ff55d85d55cc8813f8b7e8c821bdc8f8f2
 ```
 
-## 5. Test transfer BSC -> Base
+## Test transfer BSC -> Base
 ```
-npx hardhat lz:oft:send  --src-eid 40102 --dst-eid 40245 --amount 0.5 --to 0x0699DD23d5b90Ef74777B2a0390ef6bABB9d55b4
+npx hardhat lz:oft:send  --src-eid 40102 --dst-eid 40245 --amount 0.08 --to 0x0699DD23d5b90Ef74777B2a0390ef6bABB9d55b4
 ```
 ```
 info:    Quoting the native gas cost for the send transaction...
 info:    Sending the transaction...
-info:     Successfully sent 0.5 tokens from bsc-testnet to basesep-testnet
-info:     Explorer link for source chain bsc-testnet: https://testnet.bscscan.com/tx/0xc64f33dbfebcfb5dc573bb856a3d921af3b3f50e4d292e365a86ea73de04294f
-info:     LayerZero Scan link for tracking all cross-chain transaction details: https://testnet.layerzeroscan.com/tx/0xc64f33dbfebcfb5dc573bb856a3d921af3b3f50e4d292e365a86ea73de04294f
+info:     Successfully sent 0.08 tokens from bsc-testnet to basesep-testnet
+info:     Explorer link for source chain bsc-testnet: https://testnet.bscscan.com/tx/0x0ab78143cef145cb4a102a063c1cabe960ca2b92d46c4f07551187d085114ed1
+info:     LayerZero Scan link for tracking all cross-chain transaction details: https://testnet.layerzeroscan.com/tx/0x0ab78143cef145cb4a102a063c1cabe960ca2b92d46c4f07551187d085114ed1
 ```

@@ -53,7 +53,7 @@ const pathways: TwoWayConfig[] = [
         baseContract, // Chain A contract
         bscContract, // Chain B contract
         [['Horizen'], [['LayerZero Labs', 'Nethermind'], 1]], // [ requiredDVN[], [ optionalDVN[], threshold ] ]
-        [1, 1], // [A to B confirmations, B to A confirmations]
+        [3, 3], // [A to B confirmations, B to A confirmations]
         [EVM_ENFORCED_OPTIONS, EVM_ENFORCED_OPTIONS], // Chain B enforcedOptions, Chain A enforcedOptions
     ],
 ]

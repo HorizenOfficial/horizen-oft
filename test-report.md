@@ -19,6 +19,8 @@ ZEN_OFT_SYMBOL=oftZEN
 
 # for verification on etherscan (optional)
 ETHERSCAN_API_KEY=<<redacted>>
+
+TESTNET_DEPLOY=true
 ```
 
 ## 1. Deploy ZenTokenOFTAdapter on Base
@@ -83,7 +85,7 @@ Deployed contract: ZenTokenOFT, network: binance-testnet, address: 0x798d463bf01
 info:    ✓ Your contracts are now deployed
 ```
 
-## 3. Link Contracts
+## 3. Configure Contracts
 
 ```
 npx hardhat lz:oapp:wire --oapp-config layerzero.config.ts
@@ -96,6 +98,7 @@ info:    ✓ Your OApp is now configured
 ```
 Note: in this phase, some transactions failed because they were sent too fast and the RPC node interpreted as replacement transactions but with not enough replacement fee. When a transaction fails, the CLI asks you to retry them, and after a few retry they completed successfully.
 
+This step will also configure DVN (see `layerzero.config.ts`)
 ## 4. Verification on Base
 ```
 npx hardhat verify --contract contracts/ZenTokenOFTAdapter.sol:ZenTokenOFTAdapter --network base-testnet 0x689FCE894D68013EDd9fAbcaD565E7d407C6B85F "0x107fde93838e3404934877935993782f977324bb" "0x6EDCE65403992e310A62460808c4b910D972f10f" "0x0699DD23d5b90Ef74777B2a0390ef6bABB9d55b4"

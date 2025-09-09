@@ -4,6 +4,7 @@ import { TwoWayConfig, generateConnectionsConfig } from '@layerzerolabs/metadata
 import { OAppEnforcedOption } from '@layerzerolabs/toolbox-hardhat'
 
 import type { OmniPointHardhat } from '@layerzerolabs/toolbox-hardhat'
+import 'dotenv/config'
 
 /**
  *  WARNING: ONLY 1 OFTAdapter should exist for a given global mesh.
@@ -21,12 +22,12 @@ import type { OmniPointHardhat } from '@layerzerolabs/toolbox-hardhat'
  *     },
  */
 const baseContract: OmniPointHardhat = {
-    eid: EndpointId.BASESEP_V2_TESTNET,
+    eid: process.env.TESTNET_DEPLOY == "true"? EndpointId.BASESEP_V2_TESTNET : EndpointId.BASE_MAINNET,
     contractName: 'ZenTokenOFTAdapter',
 }
 
 const bscContract: OmniPointHardhat = {
-    eid: EndpointId.BSC_V2_TESTNET,
+    eid: process.env.TESTNET_DEPLOY == "true"? EndpointId.BSC_V2_TESTNET : EndpointId.BSC_V2_MAINNET,
     contractName: 'ZenTokenOFT',
 }
 
@@ -51,7 +52,7 @@ const pathways: TwoWayConfig[] = [
     [
         baseContract, // Chain A contract
         bscContract, // Chain B contract
-        [['LayerZero Labs'], []], // [ requiredDVN[], [ optionalDVN[], threshold ] ]
+        [['Horizen'], []], // [ requiredDVN[], [ optionalDVN[], threshold ] ]
         [1, 1], // [A to B confirmations, B to A confirmations]
         [EVM_ENFORCED_OPTIONS, EVM_ENFORCED_OPTIONS], // Chain B enforcedOptions, Chain A enforcedOptions
     ],

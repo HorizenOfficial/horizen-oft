@@ -6,55 +6,46 @@ import { OAppEnforcedOption } from '@layerzerolabs/toolbox-hardhat'
 import type { OmniPointHardhat } from '@layerzerolabs/toolbox-hardhat'
 import 'dotenv/config'
 
-/**
- *  WARNING: ONLY 1 OFTAdapter should exist for a given global mesh.
- *  The token address for the adapter should be defined in hardhat.config. This will be used in deployment.
- *
- *  for example:
- *
- *       'optimism-testnet': {
- *           eid: EndpointId.OPTSEP_V2_TESTNET,
- *           url: process.env.RPC_URL_OP_SEPOLIA || 'https://optimism-sepolia.gateway.tenderly.co',
- *           accounts,
- *         oftAdapter: {
- *             tokenAddress: '0x0', // Set the token address for the OFT adapter
- *         },
- *     },
- */
 const baseContract: OmniPointHardhat = {
-    eid: process.env.TESTNET_DEPLOY == "true"? EndpointId.BASESEP_V2_TESTNET : EndpointId.BASE_MAINNET,
+    eid: process.env.TESTNET_DEPLOY == "true"? EndpointId.BASESEP_V2_TESTNET : EndpointId.BASE_V2_MAINNET,
     contractName: 'ZenTokenOFTAdapter',
 }
 
-const bscContract: OmniPointHardhat = {
-    eid: process.env.TESTNET_DEPLOY == "true"? EndpointId.BSC_V2_TESTNET : EndpointId.BSC_V2_MAINNET,
+const zenContract: OmniPointHardhat = {
+    eid: process.env.TESTNET_DEPLOY == "true"? EndpointId.HORIZEN_V2_TESTNET : EndpointId.HORIZEN_V2_MAINNET,
     contractName: 'ZenTokenOFT',
 }
 
-// To connect all the above chains to each other, we need the following pathways:
-// Optimism <-> Arbitrum
+//ONLY FOR MAINNET GAS PROFILING -> first config; then test; change numbrs; repeat config
 
-// For this example's simplicity, we will use the same enforced options values for sending to all chains
-// For production, you should ensure `gas` is set to the correct value through profiling the gas usage of calling OFT._lzReceive(...) on the destination chain
-// To learn more, read https://docs.layerzero.network/v2/concepts/applications/oapp-standard#execution-options-and-enforced-settings
-const EVM_ENFORCED_OPTIONS: OAppEnforcedOption[] = [
+const lzReceiveGasProfilingA = 300_000; //read this on horizen chain (_lzReceive) after a test transfer from Base to Horizen -> 30% more
+const lzReceiveGasProfilingB = 300_000; //read this on base chain (_lzReceive) after a test transfer from Horizen to Base -> 30% more
+
+const EVM_ENFORCED_OPTIONS_A_TO_B: OAppEnforcedOption[] = [
     {
         msgType: 1,
         optionType: ExecutorOptionType.LZ_RECEIVE,
-        gas: 80000,
+        gas: lzReceiveGasProfilingB,
         value: 0,
     },
 ]
 
-// With the config generator, pathways declared are automatically bidirectional
-// i.e. if you declare A,B there's no need to declare B,A
+const EVM_ENFORCED_OPTIONS_B_TO_A: OAppEnforcedOption[] = [
+    {
+        msgType: 1,
+        optionType: ExecutorOptionType.LZ_RECEIVE,
+        gas: lzReceiveGasProfilingA,
+        value: 0,
+    },
+]
+
 const pathways: TwoWayConfig[] = [
     [
         baseContract, // Chain A contract
-        bscContract, // Chain B contract
-        [['Horizen'], [['LayerZero Labs', 'Nethermind'], 1]], // [ requiredDVN[], [ optionalDVN[], threshold ] ]
+        zenContract, // Chain B contract
+        [['LayerZero Labs'], [[],0]], // [ requiredDVN[], [ optionalDVN[], threshold ] ]
         [3, 3], // [A to B confirmations, B to A confirmations]
-        [EVM_ENFORCED_OPTIONS, EVM_ENFORCED_OPTIONS], // Chain B enforcedOptions, Chain A enforcedOptions
+        [EVM_ENFORCED_OPTIONS_A_TO_B, EVM_ENFORCED_OPTIONS_B_TO_A,]
     ],
 ]
 
@@ -62,7 +53,7 @@ export default async function () {
     // Generate the connections config based on the pathways
     const connections = await generateConnectionsConfig(pathways)
     return {
-        contracts: [{ contract: baseContract }, { contract: bscContract }],
+        contracts: [{ contract: baseContract }, { contract: zenContract }],
         connections,
     }
 }

@@ -76,6 +76,8 @@
     "hardhat-deploy": "^0.12.1"
   },
   "dependencies": {
-    "@nomicfoundation/hardhat-verify": "^2.0.14"
+    "@nomicfoundation/hardhat-verify": "^2.0.14",
+    "@safe-global/safe-core-sdk-types": "^5.1.0",
+    "fp-ts": "^2.16.11"
   }
 }

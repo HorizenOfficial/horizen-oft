@@ -64,9 +64,27 @@ const config: HardhatUserConfig = {
               tokenAddress: process.env.ERC20_TO_ADAPT! // Set the token address for the OFT adapter
             },
         },
+        'base-mainnet': {
+            eid: EndpointId.BASE_V2_MAINNET,
+            url: process.env.RPC_URL_BASE_MAINNET || 'https://mainnet.base.org',
+            accounts,
+            oftAdapter: {
+              tokenAddress: process.env.ERC20_TO_ADAPT! // Set the token address for the OFT adapter
+            },
+        },
         'binance-testnet': {
             eid: EndpointId.BSC_V2_TESTNET,
             url: process.env.RPC_URL_BNB_TESTNET || 'https://bsc-testnet.drpc.org',
+            accounts,
+        },
+        'zen-testnet': {
+            eid: EndpointId.HORIZEN_TESTNET,
+            url: process.env.RPC_URL_ZEN_TESTNET || 'https://horizen-testnet.rpc.caldera.xyz/http',
+            accounts,
+        },
+        'zen-mainnet': {
+            eid: EndpointId.HORIZEN_MAINNET,
+            url: process.env.RPC_URL_ZEN_MAINNET || 'https://horizen.calderachain.xyz/http',
             accounts,
         },
     },

@@ -78,12 +78,12 @@ const config: HardhatUserConfig = {
             accounts,
         },
         'zen-testnet': {
-            eid: EndpointId.HORIZEN_TESTNET,
+            eid: EndpointId.HORIZEN_V2_TESTNET,
             url: process.env.RPC_URL_ZEN_TESTNET || 'https://horizen-testnet.rpc.caldera.xyz/http',
             accounts,
         },
         'zen-mainnet': {
-            eid: EndpointId.HORIZEN_MAINNET,
+            eid: EndpointId.HORIZEN_V2_MAINNET,
             url: process.env.RPC_URL_ZEN_MAINNET || 'https://horizen.calderachain.xyz/http',
             accounts,
         },

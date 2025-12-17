@@ -18,8 +18,8 @@ const zenContract: OmniPointHardhat = {
 
 //ONLY FOR MAINNET GAS PROFILING -> first config; then test; change numbrs; repeat config
 
-const lzReceiveGasProfilingA = 300_000; //read this on horizen chain (_lzReceive) after a test transfer from Base to Horizen -> 30% more
-const lzReceiveGasProfilingB = 300_000; //read this on base chain (_lzReceive) after a test transfer from Horizen to Base -> 30% more
+const lzReceiveGasProfilingA = 90_000; //read this on horizen chain (_lzReceive) after a test transfer from Base to Horizen -> 30% more
+const lzReceiveGasProfilingB = 90_000; //read this on base chain (_lzReceive) after a test transfer from Horizen to Base -> 30% more
 
 const EVM_ENFORCED_OPTIONS_A_TO_B: OAppEnforcedOption[] = [
     {

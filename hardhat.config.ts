@@ -94,7 +94,22 @@ const config: HardhatUserConfig = {
         },
     },
     etherscan: {
-        apiKey: process.env.ETHERSCAN_API_KEY || "",
+        apiKey: {
+            'zen-testnet': process.env.ETHERSCAN_API_KEY || 'empty',
+            'base-testnet': process.env.ETHERSCAN_API_KEY || 'empty',
+            'base-mainnet': process.env.ETHERSCAN_API_KEY || 'empty',
+            'binance-testnet': process.env.ETHERSCAN_API_KEY || 'empty',
+        },
+        customChains: [
+            {
+                network: "zen-testnet",
+                chainId: 2651420,
+                urls: {
+                    apiURL: "https://horizen-testnet.explorer.caldera.xyz/api",
+                    browserURL: "https://horizen-testnet.explorer.caldera.xyz"
+                }
+            }
+        ]
     }
 }
 

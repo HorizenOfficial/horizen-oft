@@ -8,17 +8,18 @@ import 'dotenv/config'
 
 const baseContract: OmniPointHardhat = {
     eid: process.env.TESTNET_DEPLOY == "true"? EndpointId.BASESEP_V2_TESTNET : EndpointId.BASE_V2_MAINNET,
-    contractName: 'cbBTCOFTAdapter',
+    contractName: 'ZenTokenOFTAdapter',
 }
 
 const zenContract: OmniPointHardhat = {
     eid: process.env.TESTNET_DEPLOY == "true"? EndpointId.HORIZEN_V2_TESTNET : EndpointId.HORIZEN_V2_MAINNET,
-    contractName: 'cbBTCOFT',
+    contractName: 'ZenTokenOFT',
 }
 
 //ONLY FOR MAINNET GAS PROFILING -> first config; then test; change numbrs; repeat config
 
 const lzReceiveGasProfilingA = 110_000; //read this on horizen chain (_lzReceive) after a test transfer from Base to Horizen -> 30% more
+const lzReceiveGasProfilingB = 110_000; //read this on base chain (_lzReceive) after a test transfer from Horizen to Base -> 30% more
 
 const EVM_ENFORCED_OPTIONS_A_TO_B: OAppEnforcedOption[] = [
   {
@@ -46,7 +47,7 @@ const pathways: TwoWayConfig[] = [
     [
         baseContract, // Chain A contract
         zenContract, // Chain B contract
-        [['LayerZero Labs', 'Horizen'], [[],0]], // [ requiredDVN[], [ optionalDVN[], threshold ] ]
+        [['LayerZero Labs'], [[],0]], // [ requiredDVN[], [ optionalDVN[], threshold ] ]
         [3, 3], // [A to B confirmations, B to A confirmations]
         [EVM_ENFORCED_OPTIONS_A_TO_B, EVM_ENFORCED_OPTIONS_A_TO_B,]
     ],

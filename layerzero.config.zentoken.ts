@@ -42,12 +42,14 @@ const EVM_ENFORCED_OPTIONS_A_TO_B: OAppEnforcedOption[] = [
   },
 ]
 
-const optionalDVN: string[] = process.env.TESTNET_DEPLOY == "true" ? [] :['Nethermind']
+const requiredDVNs: string[] = process.env.TESTNET_DEPLOY == "true"
+    ? ['LayerZero Labs']
+    : ['LayerZero Labs', 'Horizen', 'Nethermind']
 const pathways: TwoWayConfig[] = [
     [
         baseContract, // Chain A contract
         zenContract, // Chain B contract
-        [['LayerZero Labs', 'Horizen'], [optionalDVN,0]], // [ requiredDVN[], [ optionalDVN[], threshold ] ]
+        [requiredDVNs, [[], 0]], // [ requiredDVN[], [ optionalDVN[], threshold ] ]
         [3, 3], // [A to B confirmations, B to A confirmations]
         [EVM_ENFORCED_OPTIONS_A_TO_B, EVM_ENFORCED_OPTIONS_A_TO_B,]
     ],

@@ -43,7 +43,7 @@ const EVM_ENFORCED_OPTIONS_A_TO_B: OAppEnforcedOption[] = [
 ]
 
 const requiredDVNs: string[] = process.env.TESTNET_DEPLOY == "true"
-    ? ['LayerZero Labs']
+    ? ['LayerZero Labs', 'Horizen']
     : ['LayerZero Labs', 'Horizen', 'Nethermind']
 const pathways: TwoWayConfig[] = [
     [
